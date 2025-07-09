@@ -11,7 +11,7 @@ const (
 	port = ":8080"
 )
 
-func main() {
+func main() {	
 	conn, err := grpc.Dial("localhost"+port, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -20,9 +20,10 @@ func main() {
 
 	client := pb.NewGreetServiceClient(conn)
 
-	// names := &pb.NameList{
-	// 	Names:= [[]string{"Girish", "John", "Doe", "Alice", "Bob"}],
-	// }
+	names := &pb.NameList{
+		Name: []string{"Girish", "John", "Doe", "Alice", "Bob"},
+	}
 
-	callSayHello(client)
+	//callSayHello(client)
+	callSayHelloServerStream(client, names)
 }
